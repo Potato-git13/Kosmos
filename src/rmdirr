@@ -1,0 +1,5 @@
+#!/bin/sh
+# rmdirr
+# remove a dir full of files
+rm -r $1
+

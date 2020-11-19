@@ -49,7 +49,7 @@ int main(){
         }
 
         char *checker = NULL;
-        checker = strstr(operation, "mkfile");
+        checker = strstr(operation, "mkfile ");
         if (checker == operation){
 
           // MAKE A NEW FILE
@@ -59,7 +59,7 @@ int main(){
           FILE *fp;
           char filename[80];
 
-          // copy the operation to final but remove the first tseven chars
+          // copy the operation to final but remove the first seven chars
           memcpy(final, operation+7, sizeof(operation)-1);
           // remove the last character aka the newline character
           char *p = final;
@@ -79,7 +79,7 @@ int main(){
           }
         }
 
-        checker = strstr(operation, "cd");
+        checker = strstr(operation, "cd ");
         if (checker == operation){
 
             // CHANGE THE CURRENT DIRECTORY
@@ -106,7 +106,7 @@ int main(){
                 colorReset();
             }
         }
-        checker = strstr(operation, "ls");
+        checker = strstr(operation, "ls ");
         if (checker == operation){
 
             // LIST THE CURRENT DIRECTORY
@@ -133,8 +133,63 @@ int main(){
                 wait(NULL);
             }
         }
+
         if (strcmp(operation, "info\n") == 0){
             info();
+        }
+
+        checker = strstr(operation, "rm ");
+        if (checker == operation){
+
+            // REMOVE A FILE
+
+            char final[999];
+            int returned;
+
+            // copy the operation to final but remove the first three chars
+            memcpy(final, operation+3, sizeof(operation));
+            // remove the last character aka the newline character
+            char *p = final;
+            p[strlen(p)-1] = 0;
+
+            // remove the file
+            returned = remove(final);
+
+            if(returned == 0) {
+                // File deleted successfuly
+            } else {
+                colorRed();
+                printf("Error: unable to delete the file / dir\n");
+                colorReset();
+            }
+        }
+
+        checker = strstr(operation, "rmdirr ");
+        if (checker == operation) {
+
+            // REMOVE A DIR WITH FILES
+
+            char final[999];
+
+            // copy the operation to final but remove the first seven chars
+            memcpy(final, operation+7, sizeof(operation));
+            // remove the last character aka the newline character
+            char *p = final;
+            p[strlen(p)-1] = 0;
+
+            //process id
+            int pid;
+            //create another process
+            pid = fork();
+            //child
+            if ( pid == 0 ) {
+                //execute rmdirr
+                execlp("rmdirr", "rmdirr", final, NULL);
+            }
+            //parent
+            else {
+                wait(NULL);
+            }
         }
     }
     return 0;

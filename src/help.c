@@ -6,7 +6,9 @@ void help(){
     printf("\ncd         changes the current directory");
     printf("\nmkfile     makes a new file if it doesn't exist");
     printf("\nls         list all the files directories and their properties");
-    printf("\ninfo       info about the shell\n\n");
+    printf("\ninfo       info about the shell");
+    printf("\nrm         remove a file or an empty directory");
+    printf("\nrmdirr     remove a directory with files\n\n");
 }
 
 void info(){
