@@ -14,6 +14,11 @@ Author : Potato-git13
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <linux/limits.h>
+
+char resolved_path[PATH_MAX];
+
+realpath("src/pass", resolved_path);
 
 extern void help();
 extern bool login();
@@ -106,7 +111,7 @@ int main(){
                 colorReset();
             }
         }
-        checker = strstr(operation, "ls ");
+        checker = strstr(operation, "ls");
         if (checker == operation){
 
             // LIST THE CURRENT DIRECTORY
@@ -190,6 +195,51 @@ int main(){
             else {
                 wait(NULL);
             }
+        }
+        if (strcmp(operation, "cngpass\n") == 0){
+
+            // CHANGE THE PASSWORD
+
+            char oldPass[80], oldPassGuess[80], newPass[80], newPassConf[80], c;
+            FILE *fp;
+            int i, returned;
+            // Open file for reading and get the password
+            fp = fopen(resolved_path, "r");
+            while ((c = getc(fp)) != EOF && i != 80) oldPass[i++] = c;
+
+            fclose(fp);
+            // Get the current password from the user
+            printf("Old password: ");
+            fgets(oldPassGuess, 80, stdin);
+            if (strcmp(oldPassGuess, oldPass) != 0){
+                printf("Old password incorrect\n");
+                break;
+            } else if (strcmp(oldPassGuess, oldPass) == 0){
+                // If successful ask for a new password and the confiramtion
+                printf("New password: ");
+                fgets(newPass, 80, stdin);
+                printf("New password confirm: ");
+                fgets(newPassConf, 80, stdin);
+                if (strcmp(newPass, newPassConf) != 0){
+                    // Fail
+                    printf("The new password and the password confirmation are not the same\n");
+                    break;
+                } else if (strcmp(newPass, newPassConf) == 0){
+                    // Open the same file for writing truntuating
+                    fp = fopen(resolved_path, "w+");
+
+                    returned = fputs(newPass, fp);
+                    fclose(fp);
+                    if (returned == 1){
+                        printf("Password set");
+                    } else {
+                        printf("Password seting failed");
+                    }
+
+                }
+            }
+
+
         }
     }
     return 0;

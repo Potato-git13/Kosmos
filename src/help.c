@@ -8,7 +8,8 @@ void help(){
     printf("\nls         list all the files directories and their properties");
     printf("\ninfo       info about the shell");
     printf("\nrm         remove a file or an empty directory");
-    printf("\nrmdirr     remove a directory with files\n\n");
+    printf("\nrmdirr     remove a directory with files");
+    printf("\ncngpass    change the password\n\n");
 }
 
 void info(){

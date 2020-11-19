@@ -1,21 +1,33 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <linux/limits.h>
 
 bool login(){
-  char password[] = "Password\n";
-  char passGuess[50];
-  bool accessAllowed;
+    FILE *fp;
+    char password[80], c;
+    int i = 0;
+    char resolved_path[PATH_MAX];
 
-  printf("Your password: ");
-  fgets(passGuess, 50, stdin);
+    realpath("src/pass", resolved_path);
 
-  if (strcmp(password, passGuess) == 0){
-      accessAllowed = true;
-      return accessAllowed;
-  }
-  else{
-      accessAllowed = false;
-      return accessAllowed;
-  }
+    fp = fopen(resolved_path, "r");
+    while ((c = getc(fp)) != EOF && i != 80) password[i++] = c;
+
+    fclose(fp);
+    char passGuess[50];
+    bool accessAllowed;
+
+    printf("Your password: ");
+    fgets(passGuess, 50, stdin);
+
+    if (strcmp(password, passGuess) == 0){
+        accessAllowed = true;
+        return accessAllowed;
+    }
+    else{
+        accessAllowed = false;
+        return accessAllowed;
+    }
 }
