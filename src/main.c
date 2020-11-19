@@ -1,13 +1,14 @@
 /* Kosmos
 Linux C shell by Potato Man
-started on 18-11-2020*/
+started on 18-11-2020
+Author : Potato-git13
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "Colors.h"
 #include <string.h>
-#include <errno.h>
 #include <dirent.h>
 #include <stdbool.h>
 #include <sys/types.h>
