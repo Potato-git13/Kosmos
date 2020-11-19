@@ -13,6 +13,7 @@ Author : Potato-git13
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 extern void help();
 extern bool login();
