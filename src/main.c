@@ -68,12 +68,12 @@ int main(){
 
           if( access( filename, F_OK ) != -1 ) {
             // file exists
-            colorRed();
-            printf("Error: File exists error\n");
-            colorReset();
+              colorRed();
+              printf("Error: File exists error\n");
+              colorReset();
           } else {
-            // file doesn't exist
-            fp = fopen(filename, "w+");
+              // file doesn't exist
+              fp = fopen(filename, "w+");
           }
         }
 
@@ -93,7 +93,7 @@ int main(){
             // Check if dir exists
             DIR* dir = opendir(final);
             if (dir) {
-                /* Directory exists. */
+                // Directory exists
                 closedir(dir);
                 returned = chdir(final);
             }
@@ -132,7 +132,7 @@ int main(){
             }
         }
         if (strcmp(operation, "info\n") == 0){
-           info();
+            info();
         }
     }
     return 0;
