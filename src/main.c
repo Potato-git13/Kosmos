@@ -64,22 +64,22 @@ int main(){
           FILE *fp;
           char filename[80];
 
-          // copy the operation to final but remove the first seven chars
+          // Copy the operation to final but remove the first seven chars
           memcpy(final, operation+7, sizeof(operation)-1);
-          // remove the last character aka the newline character
+          // Remove the last character aka the newline character
           char *p = final;
           p[strlen(p)-1] = 0;
 
-          // asign the filename final
+          // Asign the filename final
           memcpy(filename, final, sizeof(final));
 
           if( access( filename, F_OK ) != -1 ) {
-            // file exists
+            // File exists
               colorRed();
               printf("Error: File exists error\n");
               colorReset();
           } else {
-              // file doesn't exist
+              // File doesn't exist
               fp = fopen(filename, "w+");
           }
         }
@@ -92,9 +92,9 @@ int main(){
             char final[999];
             int returned;
 
-            // copy the operation to final but remove the first three chars
+            // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
-            // remove the last character aka the newline character
+            // Remove the last character aka the newline character
             char *p = final;
             p[strlen(p)-1] = 0;
             // Check if dir exists
@@ -118,22 +118,22 @@ int main(){
 
             char final[999];
 
-            // copy the operation to final but remove the first three chars
+            // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
-            // remove the last character aka the newline character
+            // Remove the last character aka the newline character
             char *p = final;
             p[strlen(p)-1] = 0;
 
-            //process id
+            // Process id
             int pid;
-            //create another process
+            // Create another process
             pid = fork();
-            //child
+            // Child
             if ( pid == 0 ) {
-                //execute cdfi
+                // Execute cdfi
                 execlp("cdfi", "cdfi", NULL);
             }
-            //parent
+            // Parent
             else {
                 wait(NULL);
             }
@@ -151,13 +151,13 @@ int main(){
             char final[999];
             int returned;
 
-            // copy the operation to final but remove the first three chars
+            // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
-            // remove the last character aka the newline character
+            // Remove the last character aka the newline character
             char *p = final;
             p[strlen(p)-1] = 0;
 
-            // remove the file
+            // Remove the file
             returned = remove(final);
 
             if(returned == 0) {
@@ -176,22 +176,22 @@ int main(){
 
             char final[999];
 
-            // copy the operation to final but remove the first seven chars
+            // Copy the operation to final but remove the first seven chars
             memcpy(final, operation+7, sizeof(operation));
-            // remove the last character aka the newline character
+            // Remove the last character aka the newline character
             char *p = final;
             p[strlen(p)-1] = 0;
 
-            //process id
+            // Process id
             int pid;
-            //create another process
+            // Create another process
             pid = fork();
-            //child
+            // Child
             if ( pid == 0 ) {
-                //execute rmdirr
+                // Execute rmdirr
                 execlp("rmdirr", "rmdirr", final, NULL);
             }
-            //parent
+            // Parent
             else {
                 wait(NULL);
             }
@@ -227,12 +227,13 @@ int main(){
                 } else if (strcmp(newPass, newPassConf) == 0){
                     // Open the same file for writing truntuating
                     fp = fopen(resolved_path, "w+");
-
+                    // Write the new password to a file
                     returned = fputs(newPass, fp);
                     fclose(fp);
                     if (returned == 1){
                         printf("Password set");
                     } else {
+                        // Fail
                         printf("Password seting failed");
                     }
 
