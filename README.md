@@ -3,4 +3,4 @@ This is a simple Linux shell. Started on 18-11-2020. Developed by Potato-git13/P
 
 Currently it is in version Alpha 0.2
 
-Please put the directory in your PATH
+Please put the directory in your PATH. 
