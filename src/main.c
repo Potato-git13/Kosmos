@@ -16,10 +16,6 @@ Author : Potato-git13
 #include <errno.h>
 #include <linux/limits.h>
 
-char resolved_path[PATH_MAX];
-
-realpath("src/pass", resolved_path);
-
 extern void help();
 extern bool login();
 extern void info();
@@ -203,6 +199,8 @@ int main(){
             char oldPass[80], oldPassGuess[80], newPass[80], newPassConf[80], c;
             FILE *fp;
             int i, returned;
+            char resolved_path[PATH_MAX];
+            realpath("src/pass", resolved_path);
             // Open file for reading and get the password
             fp = fopen(resolved_path, "r");
             while ((c = getc(fp)) != EOF && i != 80) oldPass[i++] = c;
@@ -231,10 +229,10 @@ int main(){
                     returned = fputs(newPass, fp);
                     fclose(fp);
                     if (returned == 1){
-                        printf("Password set");
+                        printf("Password set\n");
                     } else {
                         // Fail
-                        printf("Password seting failed");
+                        printf("Password seting failed\n");
                     }
 
                 }
