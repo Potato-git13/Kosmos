@@ -20,7 +20,9 @@ extern void help();
 extern bool login();
 extern void info();
 
-char sendError(char error_message[]);
+void sendError(char error_message[]);
+char *realpath(const char *path, char *resolved_path);
+
 
 int main(){
     bool accessAllowed = login();
@@ -55,29 +57,29 @@ int main(){
         checker = strstr(operation, "mkfile ");
         if (checker == operation){
 
-          // MAKE A NEW FILE
+            // MAKE A NEW FILE
 
-          char final[999];
-          int returned;
-          FILE *fp;
-          char filename[80];
+            char final[999];
+            FILE *fp;
+            char filename[80];
 
-          // Copy the operation to final but remove the first seven chars
-          memcpy(final, operation+7, sizeof(operation)-1);
-          // Remove the last character aka the newline character
-          char *p = final;
-          p[strlen(p)-1] = 0;
+            // Copy the operation to final but remove the first seven chars
+            memcpy(final, operation+7, sizeof(operation)-1);
+            // Remove the last character aka the newline character
+            char *p = final;
+            p[strlen(p)-1] = 0;
 
-          // Asign the filename final
-          memcpy(filename, final, sizeof(final));
+            // Asign the filename final
+            memcpy(filename, final, sizeof(final));
 
-          if( access( filename, F_OK ) != -1 ) {
-            // File exists
-              sendError("Error: File exists error\n");
-          } else {
-              // File doesn't exist
-              fp = fopen(filename, "w+");
-          }
+            if( access( filename, F_OK ) != -1 ) {
+                // File exists
+                sendError("Error: File exists error\n");
+            } else {
+                // File doesn't exist
+                fp = fopen(filename, "w+");
+                fclose(fp);
+            }
         }
 
         checker = strstr(operation, "cd ");
@@ -86,7 +88,6 @@ int main(){
             // CHANGE THE CURRENT DIRECTORY
 
             char final[999];
-            int returned;
 
             // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
@@ -98,7 +99,7 @@ int main(){
             if (dir) {
                 // Directory exists
                 closedir(dir);
-                returned = chdir(final);
+                chdir(final);
             }
             else if (ENOENT == errno) {
                 // Directory does not exist
@@ -285,7 +286,7 @@ int main(){
 }
 
 // sendError to reduce the amount of code
-char sendError(char error_message[]){
+void sendError(char error_message[]){
     // Send the wanted error message in red and then reset the color
     colorRed();
     printf("%s", error_message);
