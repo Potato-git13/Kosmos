@@ -20,6 +20,8 @@ extern void help();
 extern bool login();
 extern void info();
 
+char sendError(char error_message[]);
+
 int main(){
     bool accessAllowed = login();
 
@@ -71,9 +73,7 @@ int main(){
 
           if( access( filename, F_OK ) != -1 ) {
             // File exists
-              colorRed();
-              printf("Error: File exists error\n");
-              colorReset();
+              sendError("Error: File exists error\n");
           } else {
               // File doesn't exist
               fp = fopen(filename, "w+");
@@ -102,9 +102,7 @@ int main(){
             }
             else if (ENOENT == errno) {
                 // Directory does not exist
-                colorRed();
-                printf("Error: Directory does not exist\n");
-                colorReset();
+                sendError("Error: Directory does not exist\n");
             }
         }
         checker = strstr(operation, "ls");
@@ -159,9 +157,7 @@ int main(){
             if(returned == 0) {
                 // File deleted successfuly
             } else {
-                colorRed();
-                printf("Error: unable to delete the file / dir\n");
-                colorReset();
+                sendError("Error: unable to delete the file / dir\n");
             }
         }
 
@@ -232,7 +228,7 @@ int main(){
                         printf("Password set\n");
                     } else {
                         // Fail
-                        printf("Password seting failed\n");
+                        sendError("Password seting failed\n");
                     }
 
                 }
@@ -240,6 +236,55 @@ int main(){
 
 
         }
+
+        checker = strstr(operation, "read ");
+        if (checker == operation){
+            char final[999];
+
+            // Copy the operation to final but remove the first five chars
+            memcpy(final, operation+5, sizeof(operation));
+            // Remove the last character aka the newline character
+            char *p = final;
+            p[strlen(p)-1] = 0;
+
+            char ch;
+            FILE *fp;
+
+            fp= fopen(final, "r"); // read mode
+
+            if (fp == NULL)
+            {
+                sendError("Error: Could not open the file\n");
+            } else {
+                printf("%s:\n", final);
+
+                while((ch = fgetc(fp)) != EOF)
+                    printf("%c", ch);
+
+                fclose(fp);
+                printf("\n");
+            }
+        }
+
+        checker = strstr(operation, "echo ");
+        if (checker == operation){
+            char final[999];
+
+            // Copy the operation to final but remove the first five chars
+            memcpy(final, operation+5, sizeof(operation));
+            // Remove the last character aka the newline character
+            char *p = final;
+            p[strlen(p)-1] = 0;
+
+            printf("%s\n", final);
+        }
     }
     return 0;
+}
+
+char sendError(char error_message[]){
+    // Send the wanted error message in red and then reset the color
+    colorRed();
+    printf("%s", error_message);
+    colorReset();
 }
