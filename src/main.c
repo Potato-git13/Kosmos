@@ -282,6 +282,7 @@ int main(){
     return 0;
 }
 
+// sendError to reduce the amount of code
 char sendError(char error_message[]){
     // Send the wanted error message in red and then reset the color
     colorRed();
