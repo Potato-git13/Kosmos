@@ -249,16 +249,18 @@ int main(){
 
             char ch;
             FILE *fp;
-
-            fp= fopen(final, "r"); // read mode
+            // Read mode
+            fp= fopen(final, "r");
 
             if (fp == NULL)
             {
+                // Fail / Error
                 sendError("Error: Could not open the file\n");
             } else {
                 printf("%s:\n", final);
 
                 while((ch = fgetc(fp)) != EOF)
+                    // Print out all of the characters in a file
                     printf("%c", ch);
 
                 fclose(fp);
