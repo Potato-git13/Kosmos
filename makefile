@@ -1,12 +1,12 @@
 c:
-	gcc -o main src/main.c src/help.c src/access.c -lm -g
+	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g
 r:
-	./main
+	bin/main
 cr:
-	gcc -o main src/main.c src/help.c src/access.c -lm -g
-	./main
+	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g
+	bin/main
 rd:
-	gdb ./main
+	gdb bin/main
 crd:
-	gcc -o main src/main.c src/help.c src/access.c -lm -g
-	gdb ./main
+	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g
+	gdb bin/main
