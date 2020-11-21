@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 void help(){
-    printf("\nexit       exits the shell");
+    printf("\n\033[0;34mexit       exits the shell");
     printf("\nhelp       shows this screen");
     printf("\ncd         changes the current directory");
     printf("\nmkfile     makes a new file if it doesn't exist");
@@ -9,7 +9,9 @@ void help(){
     printf("\ninfo       info about the shell");
     printf("\nrm         remove a file or an empty directory");
     printf("\nrmdirr     remove a directory with files");
-    printf("\ncngpass    change the password\n\n");
+    printf("\ncngpass    change the password");
+    printf("\nread       reads the specified file");
+    printf("\necho       echoes your message\n\n\033[0m");
 }
 
 void info(){
