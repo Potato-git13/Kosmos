@@ -1,10 +1,12 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <linux/limits.h>
 
 bool login(){
+    char *realpath(const char *path, char *resolved_path);
+
     FILE *fp;
     char password[80], c;
     int i = 0;
