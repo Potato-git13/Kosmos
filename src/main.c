@@ -217,7 +217,7 @@ int main(){
                 fgets(newPassConf, 80, stdin);
                 if (strcmp(newPass, newPassConf) != 0){
                     // Fail
-                    printf("The new password and the password confirmation are not the same\n");
+                    sendError("The new password and the password confirmation are not the same\n");
                     break;
                 } else if (strcmp(newPass, newPassConf) == 0){
                     // Open the same file for writing truntuating
