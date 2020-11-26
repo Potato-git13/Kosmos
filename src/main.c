@@ -36,6 +36,8 @@ int main(){
     }
     char operation[50];
     char s[FILENAME_MAX];
+    char final[999];
+    char *p = final;
 
     while(1){
         // Get the command
@@ -59,14 +61,13 @@ int main(){
 
             // MAKE A NEW FILE
 
-            char final[999];
             FILE *fp;
             char filename[80];
 
             // Copy the operation to final but remove the first seven chars
             memcpy(final, operation+7, sizeof(operation)-1);
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
 
             // Asign the filename final
@@ -87,12 +88,10 @@ int main(){
 
             // CHANGE THE CURRENT DIRECTORY
 
-            char final[999];
-
             // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
             // Check if dir exists
             DIR* dir = opendir(final);
@@ -111,12 +110,10 @@ int main(){
 
             // LIST THE CURRENT DIRECTORY
 
-            char final[999];
-
             // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
 
             // Process id
@@ -143,13 +140,12 @@ int main(){
 
             // REMOVE A FILE
 
-            char final[999];
             int returned;
 
             // Copy the operation to final but remove the first three chars
             memcpy(final, operation+3, sizeof(operation));
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
 
             // Remove the file
@@ -167,12 +163,11 @@ int main(){
 
             // REMOVE A DIR WITH FILES
 
-            char final[999];
 
             // Copy the operation to final but remove the first seven chars
             memcpy(final, operation+7, sizeof(operation));
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
 
             // Process id
@@ -234,18 +229,17 @@ int main(){
 
                 }
             }
-
-
         }
 
         checker = strstr(operation, "read ");
         if (checker == operation){
-            char final[999];
+
+            // READ A FILE
 
             // Copy the operation to final but remove the first five chars
             memcpy(final, operation+5, sizeof(operation));
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
 
             char ch;
@@ -271,15 +265,44 @@ int main(){
 
         checker = strstr(operation, "echo ");
         if (checker == operation){
-            char final[999];
 
             // Copy the operation to final but remove the first five chars
             memcpy(final, operation+5, sizeof(operation));
             // Remove the last character aka the newline character
-            char *p = final;
+            p = final;
             p[strlen(p)-1] = 0;
 
             printf("%s\n", final);
+        }
+
+        checker = strstr(operation, "app");
+        if (checker == operation){
+
+            // APPEND TEXT TO A FILE
+
+            FILE *fp;
+            char text[200];
+            int returned;
+            // Copy the operation to final but remove the four five chars
+            memcpy(final, operation+4, sizeof(operation));
+            // Remove the last character aka the newline character
+            p = final;
+            p[strlen(p)-1] = 0;
+
+            fp = fopen(final, "a");
+            // Get text input
+            printf("> ");
+            fgets(text, 200, stdin);
+
+            returned = fputs(text, fp);
+            if (returned == 1){
+                // Success
+            }
+            else {
+                // Fail / Error
+                sendError("Error: Failed to write the text to the file");
+            }
+            fclose(fp);
         }
     }
     return 0;
