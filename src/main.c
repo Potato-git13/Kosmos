@@ -22,6 +22,7 @@ extern void info();
 
 void sendError(char error_message[]);
 char *realpath(const char *path, char *resolved_path);
+void append(char filename[]);
 
 
 int main(){
@@ -280,33 +281,18 @@ int main(){
 
             // APPEND TEXT TO A FILE
 
-            FILE *fp;
-            char text[200];
-            int returned;
             // Copy the operation to final but remove the four five chars
             memcpy(final, operation+4, sizeof(operation));
             // Remove the last character aka the newline character
             p = final;
             p[strlen(p)-1] = 0;
 
-            fp = fopen(final, "a");
-            // Get text input
-            printf("> ");
-            fgets(text, 200, stdin);
-
-            returned = fputs(text, fp);
-            if (returned == 1){
-                // Success
-            }
-            else {
-                // Fail / Error
-                sendError("Error: Failed to write the text to the file");
-            }
-            fclose(fp);
+            append(final);
         }
     }
     return 0;
 }
+
 
 // sendError to reduce the amount of code
 void sendError(char error_message[]){
@@ -314,4 +300,26 @@ void sendError(char error_message[]){
     colorRed();
     printf("%s", error_message);
     colorReset();
+}
+
+// Append to a file
+void append(char filename[]){
+    char text[200];
+    int returned;
+    FILE *fp;
+
+    fp = fopen(filename, "a");
+    // Get text input
+    printf("> ");
+    fgets(text, 200, stdin);
+
+    returned = fputs(text, fp);
+    if (returned == 1){
+        // Success
+    }
+    else {
+        // Fail / Error
+        sendError("Error: Failed to write the text to the file");
+    }
+    fclose(fp);
 }
