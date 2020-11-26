@@ -11,7 +11,9 @@ void help(){
     printf("\nrmdirr     remove a directory with files");
     printf("\ncngpass    change the password");
     printf("\nread       reads the specified file");
-    printf("\necho       echoes your message\n\n\033[0m");
+    printf("\necho       echoes your message");
+    printf("\napp        appends text to a file. If it doesn't exist it will make it.");
+    printf("\n\n\033[0m");
 }
 
 void info(){
