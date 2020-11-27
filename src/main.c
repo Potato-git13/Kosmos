@@ -39,6 +39,8 @@ int main(){
     char s[FILENAME_MAX];
     char final[999];
     char *p = final;
+    char resolved_path[PATH_MAX];
+    realpath("src/pass", resolved_path);
 
     while(1){
         // Get the command
@@ -192,8 +194,6 @@ int main(){
             char oldPass[80], oldPassGuess[80], newPass[80], newPassConf[80], c;
             FILE *fp;
             int i, returned;
-            char resolved_path[PATH_MAX];
-            realpath("src/pass", resolved_path);
             // Open file for reading and get the password
             fp = fopen(resolved_path, "r");
             while ((c = getc(fp)) != EOF && i != 80) oldPass[i++] = c;
