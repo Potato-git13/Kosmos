@@ -203,7 +203,7 @@ int main(){
             printf("Old password: ");
             fgets(oldPassGuess, 80, stdin);
             if (strcmp(oldPassGuess, oldPass) != 0){
-                printf("Old password incorrect\n");
+                sendError("Old password incorrect\n");
                 break;
             } else if (strcmp(oldPassGuess, oldPass) == 0){
                 // If successful ask for a new password and the confiramtion
@@ -281,7 +281,7 @@ int main(){
 
             // APPEND TEXT TO A FILE
 
-            // Copy the operation to final but remove the four five chars
+            // Copy the operation to final but remove the four chars
             memcpy(final, operation+4, sizeof(operation));
             // Remove the last character aka the newline character
             p = final;
