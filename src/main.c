@@ -5,11 +5,11 @@ Author : Potato-git13
 */
 
 #include <stdio.h>
+#include <dirent.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "Colors.h"
 #include <string.h>
-#include <dirent.h>
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -21,8 +21,8 @@ extern bool login();
 extern void info();
 
 void sendError(char error_message[]);
-char *realpath(const char *path, char *resolved_path);
 void append(char filename[]);
+void ls(char dir[]);
 
 
 int main(){
@@ -119,18 +119,10 @@ int main(){
             p = final;
             p[strlen(p)-1] = 0;
 
-            // Process id
-            int pid;
-            // Create another process
-            pid = fork();
-            // Child
-            if ( pid == 0 ) {
-                // Execute cdfi
-                execlp("cdfi", "cdfi", NULL);
-            }
-            // Parent
-            else {
-                wait(NULL);
+            if (strcmp(final, "") == 0){
+                ls(".");
+            } else {
+                ls(final);
             }
         }
 
@@ -322,4 +314,29 @@ void append(char filename[]){
         sendError("Error: Failed to write the text to the file");
     }
     fclose(fp);
+}
+
+
+void ls(char dir[]){
+    struct dirent **namelist;
+    int n, end;
+
+    n = scandir(dir, &namelist, NULL, alphasort);
+    if (n < 0){
+        colorRed();
+        perror("Error");
+        colorReset();
+    } else {
+        end = n;
+        n = 1;
+        colorBlueBold();
+        printf("\n");
+        while (n++ && n != end) {
+            printf("%s\n", namelist[n]->d_name);
+            free(namelist[n]);
+        }
+        free(namelist);
+        colorReset();
+        printf("\n");
+    }
 }
