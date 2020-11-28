@@ -10,7 +10,7 @@ c:
 	echo "Password" >> src/pass; \
 	fi
 	
-	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -std=c99 -Wformat=2
+	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -Wformat=2
 r:
 	if test -f src/pass; \
 	then echo; \
@@ -36,7 +36,7 @@ cr:
 	echo "Password" >> src/pass; \
 	fi
 
-	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -std=c99 -Wformat=2
+	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -Wformat=2
 	bin/main
 rd:
 	if test -f src/pass; \
@@ -63,5 +63,5 @@ crd:
 	echo "Password" >> src/pass; \
 	fi
 
-	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -std=c99 -Wformat=2
+	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -Wformat=2
 	gdb bin/main
