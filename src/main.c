@@ -59,7 +59,7 @@ int main(){
         }
 
         char *checker = NULL;
-        checker = strstr(operation, "mkfile ");
+        checker = strstr(operation, "touch ");
         if (checker == operation){
 
             // MAKE A NEW FILE
@@ -67,8 +67,8 @@ int main(){
             FILE *fp;
             char filename[80];
 
-            // Copy the operation to final but remove the first seven chars
-            memcpy(final, operation+7, sizeof(operation)-1);
+            // Copy the operation to final but remove the first six chars
+            memcpy(final, operation+6, sizeof(operation)-1);
             // Remove the last character aka the newline character
             p = final;
             p[strlen(p)-1] = 0;
@@ -153,32 +153,21 @@ int main(){
             }
         }
 
-        checker = strstr(operation, "rmdirr ");
-        if (checker == operation) {
+        // checker = strstr(operation, "rmdirr ");
+        // if (checker == operation) {
+        //
+        //     // REMOVE A DIR WITH FILES
+        //
+        //
+        //     // Copy the operation to final but remove the first seven chars
+        //     memcpy(final, operation+7, sizeof(operation));
+        //     // Remove the last character aka the newline character
+        //     p = final;
+        //     p[strlen(p)-1] = 0;
+        //
+        //     //Make it actually work!!
+        // }
 
-            // REMOVE A DIR WITH FILES
-
-
-            // Copy the operation to final but remove the first seven chars
-            memcpy(final, operation+7, sizeof(operation));
-            // Remove the last character aka the newline character
-            p = final;
-            p[strlen(p)-1] = 0;
-
-            // Process id
-            int pid;
-            // Create another process
-            pid = fork();
-            // Child
-            if ( pid == 0 ) {
-                // Execute rmdirr
-                execlp("rmdirr", "rmdirr", final, NULL);
-            }
-            // Parent
-            else {
-                wait(NULL);
-            }
-        }
         if (strcmp(operation, "cngpass\n") == 0){
 
             // CHANGE THE PASSWORD
