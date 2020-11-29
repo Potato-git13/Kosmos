@@ -1,67 +1,30 @@
-c:
-	if test -d bin; \
-	then echo; \
-	else mkdir bin; \
-	fi
+CFLAGS=-g -Wall -Wextra -pedantic -Wformat=2
 
-	if test -f src/pass; \
-	then echo; \
-	else touch src/pass; \
-	echo "Password" >> src/pass; \
-	fi
-	
-	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -Wformat=2
-r:
-	if test -f src/pass; \
-	then echo; \
-	else echo; \
-		if test -d src;\
-		then echo; \
-		else mkdir src; \
-		fi; \
-	touch src/pass; \
-	echo "Password" >> src/pass; \
-	fi
+# Compiles and generates src/pass and bin if needed
+all: c src/pass
 
+# Generates the src dir and pass file if needed.
+src/pass:
+	echo Password >src/pass
+
+# Compiles and makes bin if needed
+c: src/main.c src/help.c src/access.c
+	mkdir -p bin
+	$(CC) -o bin/main src/main.c src/help.c src/access.c -lm
+
+# run
+r: all
 	bin/main
-cr:
-	if test -d bin; \
-	then echo; \
-	else mkdir bin; \
-	fi
 
-	if test -f src/pass; \
-	then echo; \
-	else touch src/pass; \
-	echo "Password" >> src/pass; \
-	fi
+# compile and run
+cr: all r
 
-	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -Wformat=2
-	bin/main
-rd:
-	if test -f src/pass; \
-	then echo; \
-	else echo; \
-		if test -d src;\
-		then echo; \
-		else mkdir src; \
-		fi; \
-	touch src/pass; \
-	echo "Password" >> src/pass; \
-	fi
-
+# run with a debugger
+rd: all
 	gdb bin/main
-crd:
-	if test -d bin; \
-	then echo; \
-	else mkdir bin; \
-	fi
 
-	if test -f src/pass; \
-	then echo; \
-	else touch src/pass; \
-	echo "Password" >> src/pass; \
-	fi
+# compile and run with a debugger
+crd: all rd
 
-	gcc -o bin/main src/main.c src/help.c src/access.c -lm -g -Wall -Wextra -pedantic -Wformat=2
-	gdb bin/main
+# Tell makefile that those arguments aren't files
+.PHONY: all c r cr rd crd
