@@ -13,7 +13,7 @@ c: src/main.c src/help.c src/access.c
 	$(CC) -o bin/main src/main.c src/help.c src/access.c -lm
 
 # run
-r: all
+r: src/pass
 	bin/main
 
 # compile and run
